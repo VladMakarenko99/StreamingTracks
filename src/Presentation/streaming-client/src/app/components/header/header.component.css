@@ -1,0 +1,25 @@
+#header {
+    background-color: #121212; /* Rich Black */
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#header a {
+    color: #FFFFFF; /* White */
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+#header a:hover {
+    background-color: #333; /* Darker Gray */
+    color: #FFFFFF; /* White */
+}
+
+#header a:active {
+    background-color: #555; /* Medium Gray */
+}

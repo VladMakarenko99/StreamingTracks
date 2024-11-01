@@ -1,0 +1,20 @@
+.art-title {
+    text-align: center;
+    font-size: 2em;
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 0 10px;
+    color: #FFFFFF; /* White */
+}
+
+@media (max-width: 768px) {
+    .art-title {
+        font-size: 1.5em;
+    }
+}
+
+@media (max-width: 480px) {
+    .art-title {
+        font-size: 1.2em;
+    }
+}

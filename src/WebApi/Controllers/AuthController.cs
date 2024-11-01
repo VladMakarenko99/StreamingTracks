@@ -1,5 +1,6 @@
 using Application.Abstractions;
 using Application.DTOs.Login;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
@@ -20,5 +21,12 @@ public class AuthController : Controller
         if (string.IsNullOrEmpty(result)) return Unauthorized("Login failed");
         
         return Ok(result);
+    }
+    
+    [HttpGet]
+    [Authorize]
+    public  IActionResult GetAuth()
+    {
+        return Ok("Authorized");
     }
 }
