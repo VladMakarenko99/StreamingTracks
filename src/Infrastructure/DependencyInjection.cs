@@ -17,7 +17,7 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<AppDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("")));
+            options.UseNpgsql(configuration.GetConnectionString("StreamingDb")));
         
         services.AddAuthentication(options =>
         {
@@ -38,6 +38,8 @@ public static class DependencyInjection
         
         services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
         services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
+        services.AddScoped<ISoundtrackRepository, SoundtrackRepository>();
+
 
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.Jwt));
         

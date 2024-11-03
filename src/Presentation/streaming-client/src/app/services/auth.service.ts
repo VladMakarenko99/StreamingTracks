@@ -16,7 +16,7 @@ export class AuthService {
 
   logIn(token: string): void {
     localStorage.setItem('access_token', JSON.stringify(token));
-    this.isLoggedInSubject.next(true); // Update the login status
+    this.isLoggedInSubject.next(true); 
   }
 
 }
