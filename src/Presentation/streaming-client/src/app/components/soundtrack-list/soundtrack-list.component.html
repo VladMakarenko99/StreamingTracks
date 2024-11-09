@@ -1,0 +1,21 @@
+<div class="soundtrack-list">
+
+  <h2>Soundtracks</h2>
+
+  <app-upload-track (updateList)="fetchSoundTracks()"></app-upload-track>
+
+  <div class="soundtrack-item" *ngFor="let track of soundTackList">
+    <img src="assets/default-cover.jpg" alt="Album Cover" class="album-cover">
+    <div class="soundtrack-info">
+      <a href="http://localhost:5064/api/Streaming/{{track.title}}{{track.extension}}"><h3>{{ track.title }}</h3></a>
+      <p class="length">{{ convertSecondsToTime(track.lengthInSeconds) }}</p>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+int number = 10;

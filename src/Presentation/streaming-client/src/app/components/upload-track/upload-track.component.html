@@ -1,0 +1,5 @@
+<div *ngIf="isAdmin" class="upload-section">
+    <input type="file" (change)="onFileSelected($event)" accept="audio/*">
+    <button (click)="uploadSoundtrack()">Upload Soundtrack</button>
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  </div>

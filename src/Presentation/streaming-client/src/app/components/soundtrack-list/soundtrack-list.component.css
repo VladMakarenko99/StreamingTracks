@@ -1,0 +1,39 @@
+.soundtrack-list {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  color: #FFFFFF;
+  background-color: #1E1E1E;
+  margin-top: 5%;
+}
+
+.soundtrack-list h2 {
+  color: #39FF14;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.soundtrack-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #333;
+  border-radius: 8px;
+}
+
+.album-cover {
+  width: 60px;
+  height: 60px;
+  border-radius: 4px;
+  margin-right: 15px;
+}
+
+.soundtrack-info h3 {
+  color: #39FF14;
+  margin: 0;
+}
+
+.soundtrack-info .length {
+  color: #999;
+}
