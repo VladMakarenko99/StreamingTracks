@@ -9,13 +9,10 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Infrastructure.Repository;
 
-public class TokenGeneratorService : ITokenGeneratorService
+public class TokenGeneratorService(IOptions<JwtOptions> jwtOptions) : ITokenGeneratorService
 {
-    private readonly JwtOptions _jwtOptions;
-
-    public TokenGeneratorService(IOptions<JwtOptions> jwtOptions) => _jwtOptions = jwtOptions.Value;
-
-
+    private readonly JwtOptions _jwtOptions = jwtOptions.Value;
+    
     public Task<string> GenerateJwtToken(ApplicationUser user, List<string> userRoles)
     {
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Key ?? ""));
@@ -29,7 +26,7 @@ public class TokenGeneratorService : ITokenGeneratorService
 
         foreach (var role in userRoles)
         {
-            userClaims.Add(new Claim(ClaimTypes.Role, role));
+            userClaims.Add(new Claim("Role", role));
         }
 
         var token = new JwtSecurityToken(

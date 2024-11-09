@@ -13,12 +13,12 @@ public class AuthController : Controller
     public AuthController(IUserAuthenticationService userAuthenticationService) =>
         _userAuthenticationService = userAuthenticationService;
 
-    [HttpPost("login")]
+    [HttpPost("sign-in")]
     public async Task<IActionResult> Login([FromBody] LoginUserDTO
         loginUserDto)
     {
         var result = await _userAuthenticationService.LoginAsync(loginUserDto);
-        if (string.IsNullOrEmpty(result)) return Unauthorized("Login failed");
+        if (string.IsNullOrEmpty(result)) return Unauthorized("Login failed.");
         
         return Ok(result);
     }

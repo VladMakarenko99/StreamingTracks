@@ -5,6 +5,7 @@ import { SignInModel } from '../../models/sign-in.model';
 import { NgIf } from '@angular/common';
 import { Route, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { environment } from '../../../enviroments/enviroment';
 
 
 @Component({
@@ -21,13 +22,24 @@ export class SignInComponent {
     password: ''
   };
 
+  
+  errorMessage: string | null = null;
+
   onSubmit() {
     console.log(this.signInData);
-    this.http.post<string>('http://localhost:5064/api/Auth/login', this.signInData,  { responseType: 'text' as 'json' })
-      .subscribe(response => {
-        this.authService.logIn(response);
-        this.router.navigateByUrl('/');
+    this.http.post<string>(`${environment.apiUrl}/api/Auth/sign-in`, this.signInData,  { responseType: 'text' as 'json' })
+      .subscribe({
+        next: (response) => {
+          this.authService.logIn(response);
+          this.router.navigateByUrl('/');
+        },
+        error: (error) => {
+          if (error.status === 401) {
+            this.errorMessage = error.error || "Login failed. Please check your credentials.";
+          } else {
+            this.errorMessage = "An unexpected error occurred. Please try again later.";
+          }
+        }
       });
   }
-
 }

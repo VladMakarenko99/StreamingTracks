@@ -16,8 +16,8 @@ public class UserAuthenticationService(ITokenGeneratorService generatorService) 
                 LastName = "Kovtun"
             };
             var token = await generatorService.GenerateJwtToken(user ?? new ApplicationUser(),
-                new System.Collections.Generic.List<string>());
-            
+                ["Admin"]);
+
             return token;
         }
 

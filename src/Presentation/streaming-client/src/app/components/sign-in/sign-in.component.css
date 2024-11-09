@@ -1,33 +1,11 @@
-.art-title {
-  text-align: center;
-  font-size: 2em;
-  margin: 20px auto;
-  max-width: 800px;
-  padding: 0 10px;
-  color: #FFFFFF; /* White */
-}
-
-@media (max-width: 768px) {
-  .art-title {
-      font-size: 1.5em;
-  }
-}
-
-@media (max-width: 480px) {
-  .art-title {
-      font-size: 1.2em;
-  }
-}
-
-/* SIGN IN FORM */
 .sign-in-form {
   max-width: 400px;
   margin: 20px auto;
   padding: 20px;
-  border: 1px solid #333; /* Dark Gray */
+  border: 1px solid #333; 
   border-radius: 8px;
-  background-color: #1E1E1E; /* Dark Gray for the form background */
-  color: #FFFFFF; /* White text */
+  background-color: #1E1E1E; 
+  color: #FFFFFF; 
 }
 
 @media (min-height: 600px) {
@@ -50,7 +28,7 @@ label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
-  color: #FFFFFF; /* White */
+  color: #FFFFFF; 
 }
 
 input[type="email"],
@@ -58,22 +36,22 @@ input[type="password"] {
   width: 100%;
   padding: 8px;
   box-sizing: border-box;
-  background-color: #333; /* Darker background for input fields */
-  color: #FFFFFF; /* White text */
-  border: 1px solid #555; /* Medium Gray border */
+  background-color: #333;
+  color: #FFFFFF; 
+  border: 1px solid #555; 
   border-radius: 4px;
 }
 
 input[type="email"]:focus,
 input[type="password"]:focus {
-  border-color: #39FF14; /* Electric Blue border on focus */
+  border-color: #39FF14; 
 }
 
 button {
   width: 100%;
   padding: 10px;
-  background-color: #20d600; /* Electric Blue */
-  color: #1E1E1E; /* White */
+  background-color: #20d600;
+  color: hsl(0, 0%, 12%); 
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -82,6 +60,12 @@ button {
 }
 
 button:disabled {
-  background-color: #555; /* Medium Gray for disabled */
+  background-color: #555; 
   cursor: not-allowed;
+}
+
+.error-message {
+  color: #ff4d4d;
+  margin-top: 15px;
+  font-weight: bold;
 }
