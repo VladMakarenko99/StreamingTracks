@@ -1,3 +1,4 @@
+using Application.Soundtracks.Commands.Delete;
 using Application.Soundtracks.Commands.Upload;
 using Application.Soundtracks.Queries.GetAll;
 using MediatR;
@@ -30,8 +31,15 @@ public class SoundtrackController(IMediator mediator) : Controller
     }
 
     [HttpDelete]
-    public async Task<IActionResult> Delete()
+    public async Task<IActionResult> Delete(DeleteFileCommand deleteFileCommand)
     {
-        return Ok();
+        var result = await mediator.Send(deleteFileCommand);
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest(result);
+        }
+        
+        return Ok(result);
     }
 }

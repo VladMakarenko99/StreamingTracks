@@ -16,13 +16,11 @@ import { Soundtrack } from '../../models/soundtrack';
 export class UploadTrackComponent {
   selectedFile: File | null = null;
   errorMessage: string = '';
-  isAdmin: boolean = false;
   @Output() updateList = new EventEmitter<void>();
 
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.isAdmin = this.authService.getUser()?.role == 'Admin'
   }
 
   onFileSelected(event: any): void {

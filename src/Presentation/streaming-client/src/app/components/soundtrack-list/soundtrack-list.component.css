@@ -13,14 +13,25 @@
   margin-bottom: 20px;
 }
 
+.length{
+  margin-left: 1em;
+}
+
 .soundtrack-item {
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
+  justify-content: space-between; 
+  background-color: #333; 
   padding: 10px;
-  background-color: #333;
   border-radius: 8px;
+  margin-bottom: 10px;
 }
+
+.soundtrack-info {
+  display: flex;
+  align-items: center;
+}
+
 
 .album-cover {
   width: 60px;

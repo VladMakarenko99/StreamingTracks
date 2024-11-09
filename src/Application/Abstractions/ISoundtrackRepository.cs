@@ -8,7 +8,7 @@ public interface ISoundtrackRepository
     
     Task Update(Soundtrack soundtrack);
     
-    Task<Soundtrack?> GetById(string id);
+    Task<Soundtrack?> GetById(Guid id);
 
     Task<List<Soundtrack>> GetAll();
     

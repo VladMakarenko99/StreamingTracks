@@ -19,7 +19,7 @@ public class SoundtrackRepository(AppDbContext context) : ISoundtrackRepository
         await context.SaveChangesAsync();
     }
 
-    public async Task<Soundtrack?> GetById(string id) => await context.Soundtracks.FindAsync(id);
+    public async Task<Soundtrack?> GetById(Guid id) => await context.Soundtracks.FindAsync(id);
 
     public async Task<List<Soundtrack>> GetAll() => await context.Soundtracks.ToListAsync();
 
