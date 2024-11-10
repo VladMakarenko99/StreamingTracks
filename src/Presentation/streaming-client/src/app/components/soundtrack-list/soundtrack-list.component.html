@@ -4,6 +4,9 @@
 
   <app-upload-track (updateList)="fetchSoundTracks()" *ngIf="isAdmin"></app-upload-track>
 
+  <h3 *ngIf="soundTackList.length == 0">There is no soundtracks yet..</h3>
+
+
   <div class="soundtrack-item" *ngFor="let track of soundTackList">
     <div class="soundtrack-info">
       <img src="assets/default-cover.jpg" alt="Album Cover" class="album-cover">

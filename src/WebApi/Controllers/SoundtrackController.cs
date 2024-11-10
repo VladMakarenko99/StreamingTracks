@@ -2,6 +2,8 @@ using Application.Soundtracks.Commands.Delete;
 using Application.Soundtracks.Commands.Upload;
 using Application.Soundtracks.Queries.GetAll;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +20,7 @@ public class SoundtrackController(IMediator mediator) : Controller
     }
 
     [HttpPost]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public async Task<IActionResult> Upload(UploadFileCommand uploadFileCommand)
     {
         var result = await mediator.Send(uploadFileCommand);
@@ -31,6 +34,7 @@ public class SoundtrackController(IMediator mediator) : Controller
     }
 
     [HttpDelete]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public async Task<IActionResult> Delete(DeleteFileCommand deleteFileCommand)
     {
         var result = await mediator.Send(deleteFileCommand);

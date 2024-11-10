@@ -6,11 +6,13 @@ import { NgFor, NgIf } from '@angular/common';
 import { UploadTrackComponent } from "../upload-track/upload-track.component";
 import { AuthService } from '../../services/auth.service';
 import { DeleteButtonComponent } from "../delete-button/delete-button.component";
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-soundtrack-list',
   standalone: true,
-  imports: [NgFor, NgIf, UploadTrackComponent, DeleteButtonComponent],
+  imports: [NgFor, NgIf, UploadTrackComponent, DeleteButtonComponent, MatProgressBarModule, MatIconModule],
   templateUrl: './soundtrack-list.component.html',
   styleUrl: './soundtrack-list.component.css'
 })
