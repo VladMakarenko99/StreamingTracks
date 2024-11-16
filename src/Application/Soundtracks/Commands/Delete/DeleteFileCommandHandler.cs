@@ -1,6 +1,7 @@
 using Application.Abstractions;
 using Application.DTOs.Result;
 using MediatR;
+using static Domain.Constants.DirectoryConstants;
 
 namespace Application.Soundtracks.Commands.Delete;
 
@@ -16,9 +17,15 @@ public class DeleteFileCommandHandler(ISoundtrackRepository repository) : IReque
                 return Result<string>.Failure("The soundtrack not found.");
             }
 
-            var filepath = Path.Combine(Directory.GetCurrentDirectory(), "FileTest", soundtrack.Title);
+            var filepath = Path.Combine(Directory.GetCurrentDirectory(), GeneralMusicDirectory, soundtrack.Title);
         
             File.Delete(filepath + soundtrack.Extension);
+            if (!string.IsNullOrEmpty(soundtrack.AlbumCoverFileName))
+            {
+                var albumCoverFilepath = Path.Combine(Directory.GetCurrentDirectory(), GeneralMusicDirectory, AlbumCoverDirectory, soundtrack.AlbumCoverFileName);
+                File.Delete(albumCoverFilepath);
+            }
+            
             await repository.Delete(soundtrack);
         
             return Result<string>.Success($"Deleted: {soundtrack.Title}");

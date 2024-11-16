@@ -100,6 +100,10 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("AlbumCoverFileName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Extension")
                         .IsRequired()
                         .HasColumnType("text");

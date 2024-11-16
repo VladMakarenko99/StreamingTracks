@@ -6,7 +6,7 @@ using Microsoft.Net.Http.Headers;
 
 namespace Application.Streaming.Queries.Stream;
 
-public class StreamCommandHandler(ISoundtrackRepository repository) : IRequestHandler<StreamCommand,Result<FileStreamResult>>
+public class StreamCommandHandler(ISoundtrackRepository repository) : IRequestHandler<StreamCommand, Result<FileStreamResult>>
 {
     public async Task<Result<FileStreamResult>> Handle(StreamCommand request, CancellationToken cancellationToken)
     {

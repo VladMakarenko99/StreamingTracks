@@ -7,13 +7,15 @@
   <h3 *ngIf="soundTackList.length == 0 && !isLoading">There is no soundtracks yet..</h3>
 
   <div class="custom-spinner">
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
   </div>
 
   <div class="soundtrack-item" *ngFor="let track of soundTackList">
     <div class="soundtrack-info">
       <img
-        [src]="albumCoverUrl"
+        ngSrc="{{this.albumCoverUrl}}{{track.albumCoverFileName}}"
+        width="70"
+        height="70"
         alt="Album Cover"
         class="album-cover"
         (error)="onImageError($event)"
@@ -25,9 +27,11 @@
       </div>
     </div>
 
-    <app-audio-player [id]="track.id" [title]="track.title"></app-audio-player>
+    <div class="controls">
+      <app-audio-player [id]="track.id" [title]="track.title"></app-audio-player>
 
-    <app-delete-button *ngIf="isLoggedIn && isAdmin" [soundtrackId]="track.id" (onDeleted)="fetchSoundTracks()">
-    </app-delete-button>
+      <app-delete-button *ngIf="isLoggedIn && isAdmin" [soundtrackId]="track.id" (onDeleted)="fetchSoundTracks()">
+      </app-delete-button>
+    </div>
   </div>
 </div>

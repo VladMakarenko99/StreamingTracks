@@ -1,6 +1,7 @@
 using Application.Soundtracks.Commands.Delete;
 using Application.Soundtracks.Commands.Upload;
 using Application.Soundtracks.Queries.GetAll;
+using Application.Soundtracks.Queries.GetImage;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -13,8 +14,10 @@ namespace WebApi.Controllers;
 public class SoundtrackController(IMediator mediator) : Controller
 {
     [HttpGet]
-    public async Task<IActionResult> GetAll(GetAllQuery query)
+    public async Task<IActionResult> GetAll()
     {
+        var query = new GetAllQuery();
+        
         var result = await mediator.Send(query);
         return Ok(result);
     }
@@ -29,7 +32,7 @@ public class SoundtrackController(IMediator mediator) : Controller
         {
             return BadRequest(result);
         }
-        
+
         return Ok(result);
     }
 
@@ -43,7 +46,21 @@ public class SoundtrackController(IMediator mediator) : Controller
         {
             return BadRequest(result);
         }
-        
+
         return Ok(result);
+    }
+
+    [HttpGet("image/{fileName}")]
+    public async Task<IActionResult> Image(string fileName)
+    {
+        var result = await mediator.Send(new GetImageQuery(fileName));
+        
+        if (!result.IsSuccess || result.Body is null)
+        {
+            return BadRequest(result.Error);
+        }
+        
+        const string contentType = "image/jpeg";
+        return File(result.Body, contentType);
     }
 }

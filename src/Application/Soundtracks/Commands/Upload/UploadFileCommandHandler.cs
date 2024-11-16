@@ -1,65 +1,68 @@
 using Application.Abstractions;
 using Application.DTOs.Result;
-using CSCore;
 using Domain.Entities;
 using MediatR;
-using CSCore.Codecs;
-using Xabe.FFmpeg;
-using Xabe.FFmpeg.Downloader;
+using static Domain.Constants.DirectoryConstants;
 
 namespace Application.Soundtracks.Commands.Upload;
 
-public class UploadFileCommandHandler
+public class UploadFileCommandHandler(ISoundtrackRepository repository)
     : IRequestHandler<UploadFileCommand, Result<string>>
 {
-    private readonly ISoundtrackRepository _repository;
-
-    public UploadFileCommandHandler(ISoundtrackRepository repository)
-    {
-        this._repository = repository;
-
-        FFmpeg.SetExecutablesPath(Path.Combine(Directory.GetCurrentDirectory(), "FFmpeg"));
-    }
-
-
     public async Task<Result<string>> Handle(UploadFileCommand request, CancellationToken cancellationToken)
     {
         try
         {
             var filename = request.File.FileName;
 
-            var extension = "." + filename.Split('.')[filename.Split('.').Length - 1];
+            var extension = Path.GetExtension(filename);
             if (extension != ".mp3" && extension != ".m4a")
             {
                 return Result<string>.Failure("Only .mp3 and .m4a files are allowed.");
             }
 
-            var filepath = Path.Combine(Directory.GetCurrentDirectory(), "FileTest");
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), GeneralMusicDirectory);
 
-            if (!Directory.Exists(filepath))
+            if (!Directory.Exists(filePath))
             {
-                Directory.CreateDirectory(filepath);
+                Directory.CreateDirectory(filePath);
             }
 
-            var exactPath = Path.Combine(Directory.GetCurrentDirectory(), "FileTest", filename);
-            await using (var stream = new FileStream(exactPath, FileMode.Create))
+            filePath = Path.Combine(Directory.GetCurrentDirectory(), GeneralMusicDirectory, filename);
+            await using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await request.File.CopyToAsync(stream, cancellationToken);
             }
 
-            var mediaInfo = await FFmpeg.GetMediaInfo(exactPath, cancellationToken);
-            var audioLengthInSeconds = mediaInfo.Duration.TotalSeconds;
-            
+            double audioLength = 0; 
+            var albumCoverName = string.Empty;
+            using (var file = TagLib.File.Create(filePath))
+            {
+                audioLength = file.Properties.Duration.TotalSeconds;
+                if (file.Tag.Pictures.Length > 0)
+                {
+                    var albumCoverData = file.Tag.Pictures[0].Data.Data;
+                    var albumCoverDirectory = Path.Combine(Directory.GetCurrentDirectory(), GeneralMusicDirectory, AlbumCoverDirectory);
+                  
+                    if (!Directory.Exists(albumCoverDirectory))
+                    {
+                        Directory.CreateDirectory(albumCoverDirectory);
+                    }
 
-
+                    albumCoverName = (Path.GetFileNameWithoutExtension(filename) + ".jpg").Replace(' ', '-');
+                    
+                    await File.WriteAllBytesAsync(Path.Combine(albumCoverDirectory, albumCoverName), albumCoverData, cancellationToken);
+                }
+            }
             var soundtrack = new Soundtrack()
             {
                 Title = Path.GetFileNameWithoutExtension(filename),
                 Extension = extension,
-                LengthInSeconds = audioLengthInSeconds
+                LengthInSeconds = audioLength,
+                AlbumCoverFileName = albumCoverName
             };
 
-            await _repository.Add(soundtrack);
+            await repository.Add(soundtrack);
 
 
             return Result<string>.Success(filename);

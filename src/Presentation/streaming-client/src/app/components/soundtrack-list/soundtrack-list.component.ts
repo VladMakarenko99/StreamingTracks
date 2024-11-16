@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Soundtrack } from '../../models/soundtrack';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../enviroments/enviroment';
-import { NgFor, NgIf } from '@angular/common';
+import {NgFor, NgIf, NgOptimizedImage} from '@angular/common';
 import { UploadTrackComponent } from "../upload-track/upload-track.component";
 import { AuthService } from '../../services/auth.service';
 import { DeleteButtonComponent } from "../delete-button/delete-button.component";
@@ -15,7 +15,7 @@ import {MatProgressSpinner, MatProgressSpinnerModule} from "@angular/material/pr
 @Component({
   selector: 'app-soundtrack-list',
   standalone: true,
-  imports: [NgFor, NgIf, UploadTrackComponent, DeleteButtonComponent, MatIconModule, AudioPlayerComponent, MatProgressSpinner, MatProgressSpinnerModule],
+  imports: [NgFor, NgIf, UploadTrackComponent, DeleteButtonComponent, MatIconModule, AudioPlayerComponent, MatProgressSpinner, MatProgressSpinnerModule, NgOptimizedImage],
   templateUrl: './soundtrack-list.component.html',
   styleUrl: './soundtrack-list.component.css'
 })
@@ -25,7 +25,7 @@ export class SoundtrackListComponent {
   isAdmin: boolean = false;
   loggedUser: LoggedInUser | null = null;
   isLoading: boolean = false;
-  albumCoverUrl: string = '';
+  albumCoverUrl: string = `${environment.apiUrl}/api/Soundtrack/image/`;
   defaultImageUrl: string = 'album.png';
 
   constructor(private http: HttpClient, private authService: AuthService) {
@@ -48,6 +48,7 @@ export class SoundtrackListComponent {
         next: (result: any) => {
           this.soundTackList = result.body;
           this.isLoading = false;
+          console.log(this.soundTackList);
         },
         error: (error) => {
           console.error("Error fetching soundtracks:", error);

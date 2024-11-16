@@ -9,4 +9,6 @@ public class Soundtrack
     public string Extension { get; set; }
 
     public double LengthInSeconds { get; set; }
+    
+    public string AlbumCoverFileName { get; set; }
 }
