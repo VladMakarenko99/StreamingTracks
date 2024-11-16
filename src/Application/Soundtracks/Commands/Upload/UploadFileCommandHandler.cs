@@ -26,7 +26,7 @@ public class UploadFileCommandHandler
     {
         try
         {
-            string filename = request.File.FileName;
+            var filename = request.File.FileName;
 
             var extension = "." + filename.Split('.')[filename.Split('.').Length - 1];
             if (extension != ".mp3" && extension != ".m4a")
@@ -47,8 +47,9 @@ public class UploadFileCommandHandler
                 await request.File.CopyToAsync(stream, cancellationToken);
             }
 
-            var mediaInfo = await FFmpeg.GetMediaInfo(exactPath);
+            var mediaInfo = await FFmpeg.GetMediaInfo(exactPath, cancellationToken);
             var audioLengthInSeconds = mediaInfo.Duration.TotalSeconds;
+            
 
 
             var soundtrack = new Soundtrack()

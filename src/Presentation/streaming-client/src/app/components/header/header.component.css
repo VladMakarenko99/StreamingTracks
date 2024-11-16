@@ -6,6 +6,12 @@
     align-items: center;
 }
 
+.auth-buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
 #header a {
     color: #FFFFFF; /* White */
     text-decoration: none;
@@ -15,11 +21,22 @@
     transition: background-color 0.3s ease;
 }
 
-#header a:hover {
+#header button{
+    border: none;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 4px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    background-color: #121212;
+    color: #FFFFFF;
+}
+
+#header a:hover,  #header button:hover {
     background-color: #333; /* Darker Gray */
     color: #FFFFFF; /* White */
 }
 
-#header a:active {
+#header a:active,  #header button:active {
     background-color: #555; /* Medium Gray */
 }

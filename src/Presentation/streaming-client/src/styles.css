@@ -5,3 +5,11 @@ html, body {
     color: #FFFFFF; /* White text for good contrast */
     font-family: 'Montserrat', sans-serif; /* Example font */
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle, .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic {
+  stroke: #39FF14 !important;
+}
+

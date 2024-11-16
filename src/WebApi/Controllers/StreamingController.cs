@@ -1,19 +1,22 @@
+using Application.Streaming.Queries.Stream;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
-public class StreamingController : Controller
+public class StreamingController(IMediator mediator) : Controller
 {
-    [HttpGet("{fileName}")]
-    public IActionResult Index(string fileName)
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> Index(Guid id)
     {
-        var path = Path.Combine(Directory.GetCurrentDirectory(), "FileTest", fileName.Replace("%20", " "));
-        var fs = new FileStream(path, FileMode.Open);
+        var result = await mediator.Send(new StreamCommand(id));
 
-        return new FileStreamResult(fs, "audio/mp3")
+        if (!result.IsSuccess)
         {
-            EnableRangeProcessing = true,
-        };
+            return BadRequest(result.Error);
+        }
+
+        return result.Body;
     }
 }

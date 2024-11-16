@@ -1,0 +1,10 @@
+.audio-player {
+  margin: 20px;
+  /*display: flex;*/
+  /*justify-content: center;*/
+}
+
+audio {
+  /*width: 100%;*/
+  /*max-width: 300px;*/
+}

@@ -21,4 +21,8 @@ export class HeaderComponent {
       this.loggedUser = authService.getUser()
     });
   }
+
+  signOut(): void{
+    this.authService.logOut();
+  }
 }

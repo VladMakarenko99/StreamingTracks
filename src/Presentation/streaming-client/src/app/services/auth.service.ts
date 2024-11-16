@@ -21,6 +21,11 @@ export class AuthService {
     this.isLoggedInSubject.next(true);
   }
 
+  logOut(): void {
+    localStorage.removeItem('access_token');
+    this.isLoggedInSubject.next(false);
+  }
+
   getUser(): LoggedInUser | null {
     const token = localStorage.getItem('access_token');
 

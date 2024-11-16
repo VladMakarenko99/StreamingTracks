@@ -1,6 +1,9 @@
 <div id="header">
     <a routerLink="/">Home</a>
 
-    <p *ngIf="isLoggedIn && loggedUser?.firstName">Hello, {{loggedUser?.firstName}}</p>
+    <div *ngIf="isLoggedIn && loggedUser?.firstName" class="auth-buttons">
+        <p>Hello, {{loggedUser?.firstName}}</p>
+        <button (click)="signOut()">Sign Out</button>
+    </div>
     <a *ngIf="!isLoggedIn" routerLink="/sign-in">Sign In</a>
 </div>

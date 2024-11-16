@@ -1,5 +1,5 @@
 .soundtrack-list {
-  max-width: 600px;
+  max-width: 70%;
   margin: 0 auto;
   padding: 20px;
   color: #FFFFFF;
@@ -20,8 +20,8 @@
 .soundtrack-item {
   display: flex;
   align-items: center;
-  justify-content: space-between; 
-  background-color: #333; 
+  justify-content: space-between;
+  background-color: #333;
   padding: 10px;
   border-radius: 8px;
   margin-bottom: 10px;
@@ -48,3 +48,11 @@
 .soundtrack-info .length {
   color: #999;
 }
+
+mat-spinner {
+  display: block;
+  margin: 0 auto;
+  width: 50px;
+  height: 50px;
+}
+
