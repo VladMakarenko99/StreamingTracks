@@ -6,69 +6,93 @@ using static Domain.Constants.DirectoryConstants;
 
 namespace Application.Soundtracks.Commands.Upload;
 
-public class UploadFileCommandHandler(ISoundtrackRepository repository)
+public class UploadFileCommandHandler(ISoundtrackRepository repository, IUnitOfWork unitOfWork)
     : IRequestHandler<UploadFileCommand, Result<string>>
 {
     public async Task<Result<string>> Handle(UploadFileCommand request, CancellationToken cancellationToken)
     {
+        await unitOfWork.BeginTransactionAsync(cancellationToken);
+        
+        var musicFileName = request.File.FileName;
+        var musicFilePath = Path.Combine(Directory.GetCurrentDirectory(), GeneralMusicDirectory, musicFileName);
+        if (File.Exists(musicFilePath))
+        {
+            return Result<string>.Failure("File already exists.");
+        }
+
+        var albumCoverName = string.Empty;
+        
         try
         {
-            var filename = request.File.FileName;
-
-            var extension = Path.GetExtension(filename);
+            var extension = Path.GetExtension(musicFileName);
             if (extension != ".mp3" && extension != ".m4a")
             {
                 return Result<string>.Failure("Only .mp3 and .m4a files are allowed.");
             }
 
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), GeneralMusicDirectory);
+            var musicFileDirectory = Path.Combine(Directory.GetCurrentDirectory(), GeneralMusicDirectory);
 
-            if (!Directory.Exists(filePath))
+            if (!Directory.Exists(musicFileDirectory))
             {
-                Directory.CreateDirectory(filePath);
+                Directory.CreateDirectory(musicFileDirectory);
             }
+            
+            await using var stream = new FileStream(musicFilePath, FileMode.Create);
+            await request.File.CopyToAsync(stream, cancellationToken);
+            
+            double audioLength = 0;
 
-            filePath = Path.Combine(Directory.GetCurrentDirectory(), GeneralMusicDirectory, filename);
-            await using (var stream = new FileStream(filePath, FileMode.Create))
+            using var file = TagLib.File.Create(musicFilePath);
+            audioLength = file.Properties.Duration.TotalSeconds;
+            
+            if (file.Tag.Pictures.Length > 0)
             {
-                await request.File.CopyToAsync(stream, cancellationToken);
-            }
+                var albumCoverData = file.Tag.Pictures[0].Data.Data;
+                var albumCoverDirectory = Path.Combine(Directory.GetCurrentDirectory(), GeneralMusicDirectory,
+                    AlbumCoverDirectory);
 
-            double audioLength = 0; 
-            var albumCoverName = string.Empty;
-            using (var file = TagLib.File.Create(filePath))
-            {
-                audioLength = file.Properties.Duration.TotalSeconds;
-                if (file.Tag.Pictures.Length > 0)
+                if (!Directory.Exists(albumCoverDirectory))
                 {
-                    var albumCoverData = file.Tag.Pictures[0].Data.Data;
-                    var albumCoverDirectory = Path.Combine(Directory.GetCurrentDirectory(), GeneralMusicDirectory, AlbumCoverDirectory);
-                  
-                    if (!Directory.Exists(albumCoverDirectory))
-                    {
-                        Directory.CreateDirectory(albumCoverDirectory);
-                    }
-
-                    albumCoverName = (Path.GetFileNameWithoutExtension(filename) + ".jpg").Replace(' ', '-');
-                    
-                    await File.WriteAllBytesAsync(Path.Combine(albumCoverDirectory, albumCoverName), albumCoverData, cancellationToken);
+                    Directory.CreateDirectory(albumCoverDirectory);
                 }
+
+                albumCoverName = (Path.GetFileNameWithoutExtension(musicFileName) + ".jpg").Replace(' ', '-');
+                await File.WriteAllBytesAsync(Path.Combine(albumCoverDirectory, albumCoverName), albumCoverData,
+                    cancellationToken);
             }
+
             var soundtrack = new Soundtrack()
             {
-                Title = Path.GetFileNameWithoutExtension(filename),
+                Title = Path.GetFileNameWithoutExtension(musicFileName),
                 Extension = extension,
                 LengthInSeconds = audioLength,
                 AlbumCoverFileName = albumCoverName
             };
 
             await repository.Add(soundtrack);
-
-
-            return Result<string>.Success(filename);
+            
+            await unitOfWork.CommitAsync(cancellationToken);
+            
+            return Result<string>.Success(musicFileName);
         }
         catch (Exception ex)
         {
+            await unitOfWork.RollbackAsync(cancellationToken);
+            
+            if (File.Exists(musicFilePath))
+            {
+                File.Delete(musicFilePath);
+            }
+            
+            if (!string.IsNullOrEmpty(albumCoverName))
+            {
+                var albumCoverPath = Path.Combine(Directory.GetCurrentDirectory(), GeneralMusicDirectory, AlbumCoverDirectory, albumCoverName);
+                if (File.Exists(albumCoverPath))
+                {
+                    File.Delete(albumCoverPath);
+                }
+            }
+            
             return Result<string>.Failure(ex.Message);
         }
     }

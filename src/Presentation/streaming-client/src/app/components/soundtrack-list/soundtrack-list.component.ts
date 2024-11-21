@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import { Soundtrack } from '../../models/soundtrack';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../enviroments/enviroment';
-import {NgFor, NgIf, NgOptimizedImage} from '@angular/common';
+import {NgClass, NgFor, NgIf, NgOptimizedImage} from '@angular/common';
 import { UploadTrackComponent } from "../upload-track/upload-track.component";
 import { AuthService } from '../../services/auth.service';
 import { DeleteButtonComponent } from "../delete-button/delete-button.component";
@@ -15,7 +15,7 @@ import {MatProgressSpinner, MatProgressSpinnerModule} from "@angular/material/pr
 @Component({
   selector: 'app-soundtrack-list',
   standalone: true,
-  imports: [NgFor, NgIf, UploadTrackComponent, DeleteButtonComponent, MatIconModule, AudioPlayerComponent, MatProgressSpinner, MatProgressSpinnerModule, NgOptimizedImage],
+  imports: [NgFor, NgIf, UploadTrackComponent, DeleteButtonComponent, MatIconModule, AudioPlayerComponent, MatProgressSpinner, MatProgressSpinnerModule, NgOptimizedImage, NgClass],
   templateUrl: './soundtrack-list.component.html',
   styleUrl: './soundtrack-list.component.css'
 })
@@ -46,8 +46,9 @@ export class SoundtrackListComponent {
     this.http.get<Soundtrack[]>(`${environment.apiUrl}/api/Soundtrack`)
       .subscribe({
         next: (result: any) => {
-          this.soundTackList = result.body;
+          //this.soundTackList = result.body;
           this.isLoading = false;
+          this.soundTackList = result.body.map((track: Soundtrack) => ({ ...track, showPlayer: false }));
           console.log(this.soundTackList);
         },
         error: (error) => {
@@ -66,5 +67,10 @@ export class SoundtrackListComponent {
   onImageError(event: Event): void {
     const imgElement = event.target as HTMLImageElement;
     imgElement.src = this.defaultImageUrl; // Replace with the default image
+  }
+
+  togglePlayer(track: Soundtrack): void {
+    track.showPlayer = !track.showPlayer;
+    console.log(track.showPlayer);
   }
 }

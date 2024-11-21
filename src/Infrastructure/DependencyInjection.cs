@@ -4,6 +4,7 @@ using Application.Implementations;
 using Infrastructure.Configuration;
 using Infrastructure.Persistance;
 using Infrastructure.Repository;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +36,7 @@ public static class DependencyInjection
         services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
         services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
         services.AddScoped<ISoundtrackRepository, SoundtrackRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.Jwt));

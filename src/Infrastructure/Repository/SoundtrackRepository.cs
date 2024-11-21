@@ -10,7 +10,6 @@ public class SoundtrackRepository(AppDbContext context) : ISoundtrackRepository
     public async Task Add(Soundtrack soundtrack)
     {
         await context.Soundtracks.AddAsync(soundtrack);
-        await context.SaveChangesAsync();
     }
 
     public async Task Update(Soundtrack soundtrack)

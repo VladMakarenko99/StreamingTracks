@@ -4,4 +4,5 @@ export interface Soundtrack {
     extension: string;
     lengthInSeconds: number
     albumCoverFileName: string;
+    showPlayer: boolean;
 }

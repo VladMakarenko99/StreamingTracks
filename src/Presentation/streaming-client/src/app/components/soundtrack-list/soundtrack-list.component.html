@@ -28,7 +28,19 @@
     </div>
 
     <div class="controls">
-      <app-audio-player [id]="track.id" [title]="track.title"></app-audio-player>
+      <div class="play-button"
+           *ngIf="!track.showPlayer"
+           (click)="togglePlayer(track)"
+           [ngClass]="{disabled: track.showPlayer}">
+        <mat-icon>play_arrow</mat-icon>
+      </div>
+
+      <app-audio-player
+                        *ngIf="track.showPlayer"
+                        [id]="track.id"
+                        [title]="track.title"
+                        [ngClass]="{disabled: !track.showPlayer}"
+      ></app-audio-player>
 
       <app-delete-button *ngIf="isLoggedIn && isAdmin" [soundtrackId]="track.id" (onDeleted)="fetchSoundTracks()">
       </app-delete-button>
