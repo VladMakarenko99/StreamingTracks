@@ -17,8 +17,9 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+app.MapSwagger();
 
-
+app.UseRouting();
 app.UseHttpsRedirection();
 
 app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
