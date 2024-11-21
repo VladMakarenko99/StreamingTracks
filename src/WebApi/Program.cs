@@ -3,7 +3,7 @@ using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration
-    .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "WebApi"))
+    .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
     .AddEnvironmentVariables();
@@ -24,14 +24,13 @@ app.UseSwagger();
 app.UseSwaggerUI();
 app.MapSwagger();
 
+app.UseHttpsRedirection();
 app.UseRouting();
-
 
 app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.UseAuthentication(); 
 app.UseAuthorization();
-app.UseHttpsRedirection();
 
 app.MapControllers();
 
