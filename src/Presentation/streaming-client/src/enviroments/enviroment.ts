@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:5064'
+  apiUrl: 'https://streaming-api-v1.azurewebsites.net'
 };
