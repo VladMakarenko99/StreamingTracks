@@ -25,9 +25,9 @@ public class SoundtrackController(IMediator mediator) : Controller
 
     [HttpPost]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public async Task<IActionResult> Upload(UploadFileCommand uploadFileCommand)
+    public async Task<IActionResult> Upload(IFormFile file)
     {
-        var result = await mediator.Send(uploadFileCommand);
+        var result = await mediator.Send(new UploadFileCommand(file));
 
         if (!result.IsSuccess)
         {
