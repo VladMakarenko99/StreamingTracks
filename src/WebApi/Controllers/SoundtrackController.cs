@@ -37,11 +37,11 @@ public class SoundtrackController(IMediator mediator) : Controller
         return Ok(result);
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public async Task<IActionResult> Delete(DeleteFileCommand deleteFileCommand)
+    public async Task<IActionResult> Delete(Guid id)
     {
-        var result = await mediator.Send(deleteFileCommand);
+        var result = await mediator.Send(new DeleteFileCommand(id));
 
         if (!result.IsSuccess)
         {
