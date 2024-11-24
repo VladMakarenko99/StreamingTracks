@@ -1,6 +1,6 @@
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { environment } from '../../../enviroments/enviroment';
+import { environment } from '../../../environments/environment';
 import { AuthService } from '../../services/auth.service';
 import { NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon'

@@ -39,6 +39,7 @@
                         *ngIf="track.showPlayer"
                         [id]="track.id"
                         [title]="track.title"
+                        [albumCoverName]="track.albumCoverFileName"
                         [ngClass]="{disabled: !track.showPlayer}"
       ></app-audio-player>
 

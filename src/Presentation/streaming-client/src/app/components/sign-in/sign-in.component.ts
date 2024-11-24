@@ -5,7 +5,7 @@ import { SignInModel } from '../../models/sign-in.model';
 import { NgIf } from '@angular/common';
 import { Route, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { environment } from '../../../enviroments/enviroment';
+import { environment } from '../../../environments/environment';
 
 
 @Component({
@@ -22,7 +22,7 @@ export class SignInComponent {
     password: ''
   };
 
-  
+
   errorMessage: string | null = null;
 
   onSubmit() {

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { environment } from '../../../enviroments/enviroment';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-delete-button',
@@ -16,7 +16,7 @@ export class DeleteButtonComponent {
   constructor(private http: HttpClient) {}
 
   deleteSoundtrack() {
-    this.http.delete<any>(`${environment.apiUrl}/api/Soundtrack?Id=${this.soundtrackId}`).subscribe({
+    this.http.delete<any>(`${environment.apiUrl}/api/Soundtrack/${this.soundtrackId}`).subscribe({
       next: (response) => {
         if(response.isSuccess){
           alert(response.body);

@@ -1,8 +1,8 @@
+using System.Net;
 using Application.Abstractions;
 using Application.DTOs.Result;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Net.Http.Headers;
 
 namespace Application.Streaming.Queries.Stream;
 
@@ -20,12 +20,12 @@ public class StreamCommandHandler(ISoundtrackRepository repository) : IRequestHa
         
         var path = Path.Combine(Directory.GetCurrentDirectory(), "FileTest", fileName);
         var fs = new FileStream(path, FileMode.Open);
-
+        
         var fileStreamResult = new FileStreamResult(fs, "audio/mp3")
         {
-            EnableRangeProcessing = true,
+            EnableRangeProcessing = true
         };
-        
+
         return Result<FileStreamResult>.Success(fileStreamResult);
     }
 }

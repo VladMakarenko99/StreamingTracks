@@ -1,7 +1,7 @@
 import {Component, HostListener} from '@angular/core';
 import { Soundtrack } from '../../models/soundtrack';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../enviroments/enviroment';
+import { environment } from '../../../environments/environment';
 import {NgClass, NgFor, NgIf, NgOptimizedImage} from '@angular/common';
 import { UploadTrackComponent } from "../upload-track/upload-track.component";
 import { AuthService } from '../../services/auth.service';
@@ -46,10 +46,8 @@ export class SoundtrackListComponent {
     this.http.get<Soundtrack[]>(`${environment.apiUrl}/api/Soundtrack`)
       .subscribe({
         next: (result: any) => {
-          //this.soundTackList = result.body;
           this.isLoading = false;
           this.soundTackList = result.body.map((track: Soundtrack) => ({ ...track, showPlayer: false }));
-          console.log(this.soundTackList);
         },
         error: (error) => {
           console.error("Error fetching soundtracks:", error);
