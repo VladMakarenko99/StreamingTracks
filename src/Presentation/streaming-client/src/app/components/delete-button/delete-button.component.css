@@ -7,9 +7,9 @@
     cursor: pointer;
     font-size: 14px;
     transition: background-color 0.3s;
-
+    margin-left: 20px;
   }
-  
+
   .delete-button:hover {
     background-color: #ff1f1f;
   }

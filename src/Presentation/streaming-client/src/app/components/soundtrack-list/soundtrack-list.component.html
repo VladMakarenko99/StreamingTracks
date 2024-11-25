@@ -25,16 +25,15 @@
         <h3>{{ track.title }}</h3>
         <p class="length">{{ convertSecondsToTime(track.lengthInSeconds) }}</p>
       </div>
-    </div>
-
-    <div class="controls">
       <div class="play-button"
            *ngIf="!track.showPlayer"
            (click)="togglePlayer(track)"
            [ngClass]="{disabled: track.showPlayer}">
         <mat-icon>play_arrow</mat-icon>
       </div>
+    </div>
 
+    <div class="controls">
       <app-audio-player
                         *ngIf="track.showPlayer"
                         [id]="track.id"
