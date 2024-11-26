@@ -6,7 +6,7 @@ using static Domain.Constants.DirectoryConstants;
 
 namespace Application.Soundtracks.Commands.Delete;
 
-public class DeleteFileCommandHandler(ISoundtrackRepository repository, IUnitOfWork unitOfWork) : IRequestHandler<DeleteFileCommand, Result<string>>
+public class DeleteFileCommandHandler(ISoundtrackRepository repository, IUnitOfWork unitOfWork, ICacheService cache) : IRequestHandler<DeleteFileCommand, Result<string>>
 {
     public async Task<Result<string>> Handle(DeleteFileCommand request, CancellationToken cancellationToken)
     {
@@ -42,8 +42,10 @@ public class DeleteFileCommandHandler(ISoundtrackRepository repository, IUnitOfW
             }
             
             await repository.Delete(soundtrack);
-            
             await unitOfWork.CommitAsync(cancellationToken);
+            
+            await cache.RefreshSoundtracksAsync(cancellationToken);
+            
             return Result<string>.Success($"Deleted: {soundtrack.Title}");
         }
         catch (Exception e)
