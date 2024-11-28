@@ -27,6 +27,5 @@ public class GetAllQueryHandler(ISoundtrackRepository repository, ICacheService 
         {
             return Result<List<Soundtrack>>.Failure($"{e.Message}");
         }
-        
     }
 }
