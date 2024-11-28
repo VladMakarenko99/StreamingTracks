@@ -17,7 +17,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings:StreamingDb") 
+        var connectionString = Environment.GetEnvironmentVariable("POSTGRESQLCONNSTR_StreamingDb") 
                                ?? configuration.GetConnectionString("StreamingDb");
         
         services.AddDbContext<AppDbContext>(options =>
