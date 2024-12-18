@@ -1,6 +1,7 @@
 using Application.Soundtracks.Commands.Delete;
 using Application.Soundtracks.Commands.Upload;
 using Application.Soundtracks.Queries.GetAll;
+using Application.Soundtracks.Queries.GetById;
 using Application.Soundtracks.Queries.GetImage;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -20,6 +21,14 @@ public class SoundtrackController(IMediator mediator) : Controller
         var query = new GetAllQuery();
         
         var result = await mediator.Send(query);
+        return Ok(result);
+    }
+    
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get(Guid id)
+    {
+        var result = await mediator.Send(new GetByIdQuery(id));
+        
         return Ok(result);
     }
 
