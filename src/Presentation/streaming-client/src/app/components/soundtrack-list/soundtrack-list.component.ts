@@ -11,11 +11,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { LoggedInUser } from '../../models/logged-user';
 import {AudioPlayerComponent} from "../audio-player/audio-player.component";
 import {MatProgressSpinner, MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-soundtrack-list',
   standalone: true,
-  imports: [NgFor, NgIf, UploadTrackComponent, DeleteButtonComponent, MatIconModule, AudioPlayerComponent, MatProgressSpinner, MatProgressSpinnerModule, NgOptimizedImage, NgClass],
+  imports: [NgFor, NgIf, UploadTrackComponent, DeleteButtonComponent, MatIconModule, AudioPlayerComponent, MatProgressSpinner, MatProgressSpinnerModule, NgOptimizedImage, NgClass, RouterLink],
   templateUrl: './soundtrack-list.component.html',
   styleUrl: './soundtrack-list.component.css'
 })
