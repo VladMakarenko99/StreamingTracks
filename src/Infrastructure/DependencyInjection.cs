@@ -41,7 +41,7 @@ public static class DependencyInjection
         services.AddScoped<ISoundtrackRepository, SoundtrackRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<ICacheService, CacheService>();
-
+        services.AddHostedService<BackupDeletionService>();
 
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.Jwt));
         

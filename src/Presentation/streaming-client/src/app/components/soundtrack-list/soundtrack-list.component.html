@@ -22,7 +22,9 @@
       >
 
       <div class="soundtrack-info">
-        <h3>{{ track.title }}</h3>
+        <a routerLink="/soundtrack/{{track.id}}">
+          <h3>{{ track.title }}</h3>
+        </a>
         <p class="length">{{ convertSecondsToTime(track.lengthInSeconds) }}</p>
       </div>
       <div class="play-button"
