@@ -11,4 +11,6 @@ public class Soundtrack
     public double LengthInSeconds { get; set; }
     
     public string AlbumCoverFileName { get; set; }
+    
+    public DateTime CreatedAt { get; set; }
 }

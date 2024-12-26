@@ -1,0 +1,88 @@
+.single-soundtrack-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #333;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  margin: 50px auto;
+  color: #fff;
+}
+
+.container{
+  position: relative;
+}
+
+.soundtrack-info {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.album-cover {
+  border-radius: 4px;
+  margin-right: 15px;
+  object-fit: cover;
+}
+
+.track-details h3 {
+  color: #39FF14;
+  margin: 0;
+}
+
+.length {
+  color: #aaa;
+  margin-top: 5px;
+}
+
+.audio-player {
+  width: 100%;
+}
+
+audio {
+  width: 100%;
+}
+
+.loading-spinner {
+  text-align: center;
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.error {
+  text-align: center;
+  color: #ff4444;
+  margin-top: 50px;
+}
+
+@media (max-width: 600px) {
+  .single-soundtrack-card {
+    max-width: 90%;
+    padding: 15px;
+    background-color: #333;
+  }
+
+  .album-cover {
+    width: 70px;
+    height: 70px;
+    margin-right: 10px;
+  }
+
+  .track-details h3 {
+    font-size: 16px;
+  }
+
+  .length {
+    font-size: 14px;
+  }
+}

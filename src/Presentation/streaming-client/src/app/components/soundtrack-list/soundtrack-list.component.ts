@@ -12,6 +12,7 @@ import { LoggedInUser } from '../../models/logged-user';
 import {AudioPlayerComponent} from "../audio-player/audio-player.component";
 import {MatProgressSpinner, MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {RouterLink} from "@angular/router";
+import {UtilitiesService} from "../../shared/utilities.service";
 
 @Component({
   selector: 'app-soundtrack-list',
@@ -27,9 +28,8 @@ export class SoundtrackListComponent {
   loggedUser: LoggedInUser | null = null;
   isLoading: boolean = false;
   albumCoverUrl: string = `${environment.apiUrl}/api/Soundtrack/image/`;
-  defaultImageUrl: string = 'album.png';
 
-  constructor(private http: HttpClient, private authService: AuthService) {
+  constructor(private http: HttpClient, private authService: AuthService, public utilityService: UtilitiesService) {
     this.authService.isLoggedIn$.subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
       this.loggedUser = authService.getUser();
@@ -57,16 +57,6 @@ export class SoundtrackListComponent {
       });
   }
 
-  convertSecondsToTime(seconds: number): string {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = Math.floor(seconds % 60);
-    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
-  }
-
-  onImageError(event: Event): void {
-    const imgElement = event.target as HTMLImageElement;
-    imgElement.src = this.defaultImageUrl; // Replace with the default image
-  }
 
   togglePlayer(track: Soundtrack): void {
     track.showPlayer = !track.showPlayer;

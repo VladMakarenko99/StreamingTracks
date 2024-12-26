@@ -1,0 +1,60 @@
+<router-outlet></router-outlet>
+<div class="container">
+  <div *ngIf="isLoading" class="loading-spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+  <div class="single-soundtrack-card" *ngIf="soundtrack">
+    <div class="soundtrack-info">
+      <!-- Album Cover -->
+      <img
+        [src]="albumCoverUrl + soundtrack.albumCoverFileName"
+        width="100"
+        height="100"
+        alt="Album Cover"
+        class="album-cover"
+        (error)="utilities.onImageError($event)"
+      >
+
+      <!-- Soundtrack Title and Length -->
+      <div class="track-details">
+        <h3>{{ soundtrack.title }}</h3>
+        <p class="length">{{ utilities.convertSecondsToTime(soundtrack.lengthInSeconds) }}</p>
+      </div>
+    </div>
+
+    <!-- Audio Player -->
+    <app-audio-player
+      [id]="soundtrack.id"
+      [title]="soundtrack.title"
+      [albumCoverName]="soundtrack.albumCoverFileName"
+      [ngClass]="{disabled: !soundtrack.showPlayer}"
+      [nextTrackId]="soundtrack.nextTrackId"
+    ></app-audio-player>
+
+    <div class="track-navigation">
+      <button
+        mat-icon-button
+        color="primary"
+        (click)="navigateToTrack(soundtrack.prevTrackId)"
+        [disabled]="!soundtrack.prevTrackId || soundtrack.prevTrackId === '00000000-0000-0000-0000-000000000000'"
+      >
+        <mat-icon>skip_previous</mat-icon>
+      </button>
+
+      <button
+        mat-icon-button
+        color="primary"
+        (click)="navigateToTrack(soundtrack.nextTrackId)"
+        [disabled]="!soundtrack.nextTrackId || soundtrack.nextTrackId === '00000000-0000-0000-0000-000000000000'"
+      >
+        <mat-icon>skip_next</mat-icon>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+
+<div *ngIf="!soundtrack && !isLoading" class="error">
+  <h3>Soundtrack not found.</h3>
+</div>

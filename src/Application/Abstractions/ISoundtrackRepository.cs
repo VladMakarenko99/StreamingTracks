@@ -13,4 +13,6 @@ public interface ISoundtrackRepository
     Task<List<Soundtrack>> GetAll();
     
     Task Delete(Soundtrack soundtrack);
+
+    Task<(Guid? PrevTrackId, Guid? NextTrackId)> GetPreviousAndNextTrackIds(Soundtrack currentTrack);
 }

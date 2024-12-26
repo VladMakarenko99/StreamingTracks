@@ -18,14 +18,14 @@
         height="70"
         alt="Album Cover"
         class="album-cover"
-        (error)="onImageError($event)"
+        (error)="utilityService.onImageError($event)"
       >
 
       <div class="soundtrack-info">
         <a routerLink="/soundtrack/{{track.id}}">
           <h3>{{ track.title }}</h3>
         </a>
-        <p class="length">{{ convertSecondsToTime(track.lengthInSeconds) }}</p>
+        <p class="length">{{ utilityService.convertSecondsToTime(track.lengthInSeconds) }}</p>
       </div>
       <div class="play-button"
            *ngIf="!track.showPlayer"

@@ -72,7 +72,8 @@ public class UploadFileCommandHandler(ISoundtrackRepository repository, IUnitOfW
                 Title = Path.GetFileNameWithoutExtension(musicFileName),
                 Extension = extension,
                 LengthInSeconds = audioLength,
-                AlbumCoverFileName = albumCoverName
+                AlbumCoverFileName = albumCoverName,
+                CreatedAt = DateTime.Now
             };
 
             await repository.Add(soundtrack);
