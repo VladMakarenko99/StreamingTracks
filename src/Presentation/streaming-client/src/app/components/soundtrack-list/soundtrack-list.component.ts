@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { LoggedInUser } from '../../models/logged-user';
 import {AudioPlayerComponent} from "../audio-player/audio-player.component";
 import {MatProgressSpinner, MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {UtilitiesService} from "../../shared/utilities.service";
 
 @Component({
@@ -29,7 +29,7 @@ export class SoundtrackListComponent {
   isLoading: boolean = false;
   albumCoverUrl: string = `${environment.apiUrl}/api/Soundtrack/image/`;
 
-  constructor(private http: HttpClient, private authService: AuthService, public utilityService: UtilitiesService) {
+  constructor(private http: HttpClient, private authService: AuthService, public utilityService: UtilitiesService, private router: Router) {
     this.authService.isLoggedIn$.subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
       this.loggedUser = authService.getUser();
@@ -59,7 +59,6 @@ export class SoundtrackListComponent {
 
 
   togglePlayer(track: Soundtrack): void {
-    track.showPlayer = !track.showPlayer;
-    console.log(track.showPlayer);
+    this.router.navigate(['/soundtrack', track.id]);
   }
 }

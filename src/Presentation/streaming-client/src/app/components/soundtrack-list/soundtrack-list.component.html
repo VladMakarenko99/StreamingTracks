@@ -22,15 +22,11 @@
       >
 
       <div class="soundtrack-info">
-        <a routerLink="/soundtrack/{{track.id}}">
           <h3>{{ track.title }}</h3>
-        </a>
         <p class="length">{{ utilityService.convertSecondsToTime(track.lengthInSeconds) }}</p>
       </div>
       <div class="play-button"
-           *ngIf="!track.showPlayer"
-           (click)="togglePlayer(track)"
-           [ngClass]="{disabled: track.showPlayer}">
+           (click)="togglePlayer(track)">
         <mat-icon>play_arrow</mat-icon>
       </div>
     </div>

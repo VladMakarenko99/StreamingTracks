@@ -46,6 +46,36 @@ audio {
   width: 100%;
 }
 
+.navigation-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px; /* Space above buttons */
+  gap: 25px; /* Wider space between buttons */
+  height: 60px; /* Ensures enough height for the buttons */
+}
+
+.prev-btn,
+.next-btn {
+  color: #39FF14; /* Bright green */
+  background: none; /* Removes background color */
+  border: none; /* Removes border */
+  cursor: pointer; /* Pointer cursor for better UX */
+  padding: 15px; /* Adds enough padding to avoid cropping */
+  border-radius: 50%; /* Makes buttons circular */
+  transition: transform 0.2s ease-in-out; /* Smooth hover effect */
+}
+
+.prev-btn:hover,
+.next-btn:hover {
+  transform: scale(1.2); /* Slight zoom-in effect on hover */
+}
+
+.mat-icon {
+  font-size: 30px; /* Ensures the icon is larger and visible */
+}
+
+
 .loading-spinner {
   text-align: center;
   margin-top: 100px;

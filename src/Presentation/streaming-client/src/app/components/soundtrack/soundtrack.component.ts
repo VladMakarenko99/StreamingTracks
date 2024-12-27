@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {ActivatedRoute, Router, RouterLink, RouterOutlet} from '@angular/router';
 import { environment } from '../../../environments/environment';
@@ -31,6 +31,7 @@ export class SoundtrackComponent implements OnInit {
 
   ngOnInit(): void {
     this.routeSub = this.route.paramMap.subscribe((paramMap) => {
+      console.log("changed")
       const id = paramMap.get('id');
       if (id) {
         this.fetchSoundtrack(id);
@@ -39,6 +40,8 @@ export class SoundtrackComponent implements OnInit {
   }
 
   fetchSoundtrack(id: string): void {
+    console.log("FETCHING")
+
     this.isLoading = true;
 
     this.http.get<Soundtrack>(`${environment.apiUrl}/api/Soundtrack/${id}`).subscribe({
@@ -59,7 +62,8 @@ export class SoundtrackComponent implements OnInit {
 
   navigateToTrack(trackId: string): void {
     if (trackId && trackId !== '00000000-0000-0000-0000-000000000000') {
-      this.router.navigate(['/soundtrack', trackId]);
+      console.log("navigating to track")
+      this.router.navigate(['/soundtrack', trackId], { queryParamsHandling: 'preserve' });
     }
   }
 
@@ -68,4 +72,5 @@ export class SoundtrackComponent implements OnInit {
       this.routeSub.unsubscribe();
     }
   }
+
 }

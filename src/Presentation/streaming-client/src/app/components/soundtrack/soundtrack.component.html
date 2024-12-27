@@ -29,12 +29,13 @@
       [albumCoverName]="soundtrack.albumCoverFileName"
       [ngClass]="{disabled: !soundtrack.showPlayer}"
       [nextTrackId]="soundtrack.nextTrackId"
+      [prevTrackId]="soundtrack.prevTrackId"
     ></app-audio-player>
 
-    <div class="track-navigation">
+    <div class="navigation-buttons">
       <button
+        class="prev-btn"
         mat-icon-button
-        color="primary"
         (click)="navigateToTrack(soundtrack.prevTrackId)"
         [disabled]="!soundtrack.prevTrackId || soundtrack.prevTrackId === '00000000-0000-0000-0000-000000000000'"
       >
@@ -42,8 +43,8 @@
       </button>
 
       <button
+        class="next-btn"
         mat-icon-button
-        color="primary"
         (click)="navigateToTrack(soundtrack.nextTrackId)"
         [disabled]="!soundtrack.nextTrackId || soundtrack.nextTrackId === '00000000-0000-0000-0000-000000000000'"
       >

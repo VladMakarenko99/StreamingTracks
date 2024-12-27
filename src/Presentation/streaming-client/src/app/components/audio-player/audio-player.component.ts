@@ -6,7 +6,7 @@ import {
   SimpleChanges,
   OnChanges,
   ViewChild,
-  ElementRef
+  ElementRef, Output, EventEmitter
 } from "@angular/core";
 import {Router} from "@angular/router";
 
@@ -21,6 +21,7 @@ export class AudioPlayerComponent implements OnChanges, OnDestroy {
   @Input() id: string = '';
   @Input() albumCoverName: string = '';
   @Input() title: string = 'Default Title';
+  @Input() prevTrackId: string = '';
   @Input() nextTrackId: string = '';
   @ViewChild('audioElement', { static: false }) audioElementRef!: ElementRef<HTMLAudioElement>;
 
@@ -51,8 +52,9 @@ export class AudioPlayerComponent implements OnChanges, OnDestroy {
       ? `${environment.apiUrl}/api/Soundtrack/image/${this.albumCoverName}`
       : "album.png";
 
+    let audioElement: HTMLAudioElement | null = null;
     if (this.audioElementRef) {
-      const audioElement = this.audioElementRef.nativeElement;
+      audioElement = this.audioElementRef.nativeElement;
       // audioElement.pause();
       audioElement.src = this.audioUrl;
       audioElement.load();
@@ -67,6 +69,20 @@ export class AudioPlayerComponent implements OnChanges, OnDestroy {
         ],
       });
     }
+
+    navigator.mediaSession.setActionHandler('previoustrack', () => {
+      if (this.prevTrackId) {
+        this.router.navigate(['/soundtrack', this.prevTrackId]); // Emit event to navigate to the previous track
+      }
+    });
+
+    navigator.mediaSession.setActionHandler('nexttrack', () => {
+      if (this.nextTrackId) {
+        this.router.navigate(['/soundtrack', this.nextTrackId]); // Emit event to navigate to the next track
+      }
+    });
+    navigator.mediaSession.setActionHandler('play', () => audioElement?.play());
+    navigator.mediaSession.setActionHandler('pause', () => audioElement?.pause());
   }
 
   ngOnDestroy(): void {

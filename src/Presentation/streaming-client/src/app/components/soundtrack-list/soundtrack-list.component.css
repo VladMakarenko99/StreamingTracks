@@ -84,22 +84,15 @@ mat-spinner {
   cursor: pointer;
   text-align: center;
   margin-left: 15px;
+  transition: all 0.1s ease-in-out;
 }
 
-.track-navigation {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
+.play-button:hover {
+  width: 43px;
+  height: 43px;
+  margin-left: 12px;
+  background-color: #58ff3a;
 }
-
-.track-navigation button {
-  margin: 0 10px;
-}
-
-.track-navigation mat-icon {
-  font-size: 24px;
-}
-
 
 @media (max-width: 900px) {
   .soundtrack-list {
