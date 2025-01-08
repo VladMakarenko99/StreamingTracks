@@ -115,6 +115,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("double precision");
 
                     b.Property<string>("Slug")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Title")

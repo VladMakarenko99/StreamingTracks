@@ -14,5 +14,5 @@ public class Soundtrack
     
     public DateTime CreatedAt { get; set; }
     
-    public string? Slug { get; set; }
+    public string Slug { get; set; }
 }

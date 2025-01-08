@@ -17,5 +17,5 @@ public interface ISoundtrackRepository
     
     Task Delete(Soundtrack soundtrack);
 
-    Task<(string? PrevTrackSlug, string? NextTrackSlug)> GetPreviousAndNextTrackSlugs(Soundtrack currentTrack);
+    Task<(string PrevTrackSlug, string NextTrackSlug)> GetPreviousAndNextTrackSlugs(Soundtrack currentTrack);
 }

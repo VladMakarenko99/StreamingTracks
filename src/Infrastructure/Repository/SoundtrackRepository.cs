@@ -32,7 +32,7 @@ public class SoundtrackRepository(AppDbContext context) : ISoundtrackRepository
         await context.SaveChangesAsync();
     }
 
-    public async Task<(string? PrevTrackSlug, string? NextTrackSlug)> GetPreviousAndNextTrackSlugs(Soundtrack currentTrack)
+    public async Task<(string PrevTrackSlug, string NextTrackSlug)> GetPreviousAndNextTrackSlugs(Soundtrack currentTrack)
     {
         var prevTrackSlug
             = await context.Soundtracks
@@ -63,6 +63,6 @@ public class SoundtrackRepository(AppDbContext context) : ISoundtrackRepository
                 .FirstOrDefaultAsync();
         }
 
-        return (prevTrackSlug, nextTrackSlug);
+        return (prevTrackSlug, nextTrackSlug)!;
     }
 }
