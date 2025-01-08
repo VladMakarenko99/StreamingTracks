@@ -59,6 +59,6 @@ export class SoundtrackListComponent {
 
 
   togglePlayer(track: Soundtrack): void {
-    this.router.navigate(['/soundtrack', track.id]);
+    this.router.navigate(['/soundtrack', track.slug]);
   }
 }

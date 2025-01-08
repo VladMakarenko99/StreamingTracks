@@ -13,4 +13,6 @@ public class Soundtrack
     public string AlbumCoverFileName { get; set; }
     
     public DateTime CreatedAt { get; set; }
+    
+    public string? Slug { get; set; }
 }

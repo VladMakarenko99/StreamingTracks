@@ -9,10 +9,13 @@ public interface ISoundtrackRepository
     Task Update(Soundtrack soundtrack);
     
     Task<Soundtrack?> GetById(Guid id);
+    
+    Task<Soundtrack?> GetBySlug(string slug);
+
 
     Task<List<Soundtrack>> GetAll();
     
     Task Delete(Soundtrack soundtrack);
 
-    Task<(Guid? PrevTrackId, Guid? NextTrackId)> GetPreviousAndNextTrackIds(Soundtrack currentTrack);
+    Task<(string? PrevTrackSlug, string? NextTrackSlug)> GetPreviousAndNextTrackSlugs(Soundtrack currentTrack);
 }

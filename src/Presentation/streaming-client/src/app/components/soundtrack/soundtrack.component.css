@@ -28,6 +28,12 @@
   object-fit: cover;
 }
 
+.track-details{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .track-details h3 {
   color: #39FF14;
   margin: 0;

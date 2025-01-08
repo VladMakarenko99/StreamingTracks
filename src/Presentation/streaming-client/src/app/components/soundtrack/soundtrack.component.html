@@ -27,17 +27,16 @@
       [id]="soundtrack.id"
       [title]="soundtrack.title"
       [albumCoverName]="soundtrack.albumCoverFileName"
-      [ngClass]="{disabled: !soundtrack.showPlayer}"
-      [nextTrackId]="soundtrack.nextTrackId"
-      [prevTrackId]="soundtrack.prevTrackId"
+      [nextTrackId]="soundtrack.nextTrackSlug"
+      [prevTrackId]="soundtrack.prevTrackSlug"
     ></app-audio-player>
 
     <div class="navigation-buttons">
       <button
         class="prev-btn"
         mat-icon-button
-        (click)="navigateToTrack(soundtrack.prevTrackId)"
-        [disabled]="!soundtrack.prevTrackId || soundtrack.prevTrackId === '00000000-0000-0000-0000-000000000000'"
+        (click)="navigateToTrack(soundtrack.prevTrackSlug)"
+        [disabled]="!soundtrack.prevTrackSlug || soundtrack.prevTrackSlug === '00000000-0000-0000-0000-000000000000'"
       >
         <mat-icon>skip_previous</mat-icon>
       </button>
@@ -45,8 +44,8 @@
       <button
         class="next-btn"
         mat-icon-button
-        (click)="navigateToTrack(soundtrack.nextTrackId)"
-        [disabled]="!soundtrack.nextTrackId || soundtrack.nextTrackId === '00000000-0000-0000-0000-000000000000'"
+        (click)="navigateToTrack(soundtrack.nextTrackSlug)"
+        [disabled]="!soundtrack.nextTrackSlug || soundtrack.nextTrackSlug === '00000000-0000-0000-0000-000000000000'"
       >
         <mat-icon>skip_next</mat-icon>
       </button>

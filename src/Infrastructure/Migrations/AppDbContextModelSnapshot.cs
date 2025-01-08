@@ -105,7 +105,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Extension")
                         .IsRequired()
@@ -113,6 +113,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<double>("LengthInSeconds")
                         .HasColumnType("double precision");
+
+                    b.Property<string>("Slug")
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .IsRequired()

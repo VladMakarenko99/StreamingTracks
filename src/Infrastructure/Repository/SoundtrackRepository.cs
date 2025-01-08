@@ -20,6 +20,10 @@ public class SoundtrackRepository(AppDbContext context) : ISoundtrackRepository
 
     public async Task<Soundtrack?> GetById(Guid id) => await context.Soundtracks.FindAsync(id);
 
+    public async Task<Soundtrack?> GetBySlug(string slug)
+        => await context.Soundtracks.SingleOrDefaultAsync(x => x.Slug == slug);
+
+
     public async Task<List<Soundtrack>> GetAll() => await context.Soundtracks.ToListAsync();
 
     public async Task Delete(Soundtrack soundtrack)
@@ -28,36 +32,37 @@ public class SoundtrackRepository(AppDbContext context) : ISoundtrackRepository
         await context.SaveChangesAsync();
     }
 
-    public async Task<(Guid? PrevTrackId, Guid? NextTrackId)> GetPreviousAndNextTrackIds(Soundtrack currentTrack)
+    public async Task<(string? PrevTrackSlug, string? NextTrackSlug)> GetPreviousAndNextTrackSlugs(Soundtrack currentTrack)
     {
-        var prevTrackId = await context.Soundtracks
-            .Where(t => t.CreatedAt < currentTrack.CreatedAt)
-            .OrderByDescending(t => t.CreatedAt)
-            .Select(t => t.Id)
-            .FirstOrDefaultAsync();
-        
-        if (prevTrackId == Guid.Empty)
+        var prevTrackSlug
+            = await context.Soundtracks
+                .Where(t => t.CreatedAt < currentTrack.CreatedAt)
+                .OrderByDescending(t => t.CreatedAt)
+                .Select(t => t.Slug)
+                .FirstOrDefaultAsync();
+
+        if (string.IsNullOrEmpty(prevTrackSlug))
         {
-            prevTrackId = await context.Soundtracks
+            prevTrackSlug = await context.Soundtracks
                 .OrderBy(t => t.CreatedAt)
-                .Select(t => t.Id)
+                .Select(t => t.Slug)
                 .LastOrDefaultAsync();
         }
-        
-        var nextTrackId = await context.Soundtracks
+
+        var nextTrackSlug = await context.Soundtracks
             .Where(t => t.CreatedAt > currentTrack.CreatedAt)
             .OrderBy(t => t.CreatedAt)
-            .Select(t => t.Id)
+            .Select(t => t.Slug)
             .FirstOrDefaultAsync();
-        
-        if (nextTrackId == Guid.Empty)
+
+        if (string.IsNullOrEmpty(nextTrackSlug))
         {
-            nextTrackId = await context.Soundtracks
+            nextTrackSlug = await context.Soundtracks
                 .OrderBy(t => t.CreatedAt)
-                .Select(t => t.Id)
+                .Select(t => t.Slug)
                 .FirstOrDefaultAsync();
         }
 
-        return (prevTrackId, nextTrackId);
+        return (prevTrackSlug, nextTrackSlug);
     }
 }

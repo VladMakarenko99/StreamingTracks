@@ -84,7 +84,7 @@ mat-spinner {
   cursor: pointer;
   text-align: center;
   margin-left: 15px;
-  transition: all 0.1s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .play-button:hover {

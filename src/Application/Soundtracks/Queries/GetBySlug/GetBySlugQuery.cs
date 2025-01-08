@@ -5,4 +5,4 @@ using MediatR;
 
 namespace Application.Soundtracks.Queries.GetById;
 
-public record GetByIdQuery(Guid id) :  IRequest<Result<SoundtrackDto>>;
+public record GetBySlugQuery(string Slug) :  IRequest<Result<SoundtrackDto>>;

@@ -32,23 +32,24 @@ export class SoundtrackComponent implements OnInit {
   ngOnInit(): void {
     this.routeSub = this.route.paramMap.subscribe((paramMap) => {
       console.log("changed")
-      const id = paramMap.get('id');
-      if (id) {
-        this.fetchSoundtrack(id);
+      const slug = paramMap.get('slug');
+      if (slug) {
+        this.fetchSoundtrack(slug);
       }
     });
   }
 
-  fetchSoundtrack(id: string): void {
-    console.log("FETCHING")
+  fetchSoundtrack(slug: string): void {
+    console.log("FETCHING: ")
 
     this.isLoading = true;
 
-    this.http.get<Soundtrack>(`${environment.apiUrl}/api/Soundtrack/${id}`).subscribe({
+    this.http.get<Soundtrack>(`${environment.apiUrl}/api/Soundtrack/${slug}`).subscribe({
       next: (result: any) => {
         this.isLoading = false;
         if (result.isSuccess) {
           this.soundtrack = result.body;
+          console.log(this.soundtrack);
         } else {
           console.error("Error: Unable to fetch soundtrack details.");
         }
@@ -61,7 +62,7 @@ export class SoundtrackComponent implements OnInit {
   }
 
   navigateToTrack(trackId: string): void {
-    if (trackId && trackId !== '00000000-0000-0000-0000-000000000000') {
+    if (trackId) {
       console.log("navigating to track")
       this.router.navigate(['/soundtrack', trackId], { queryParamsHandling: 'preserve' });
     }

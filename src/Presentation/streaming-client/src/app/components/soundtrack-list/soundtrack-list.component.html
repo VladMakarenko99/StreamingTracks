@@ -32,14 +32,6 @@
     </div>
 
     <div class="controls">
-      <app-audio-player
-                        *ngIf="track.showPlayer"
-                        [id]="track.id"
-                        [title]="track.title"
-                        [albumCoverName]="track.albumCoverFileName"
-                        [ngClass]="{disabled: !track.showPlayer}"
-      ></app-audio-player>
-
       <app-delete-button *ngIf="isLoggedIn && isAdmin" [soundtrackId]="track.id" (onDeleted)="fetchSoundTracks()">
       </app-delete-button>
     </div>

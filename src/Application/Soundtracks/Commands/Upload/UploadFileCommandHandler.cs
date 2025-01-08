@@ -3,6 +3,9 @@ using Application.DTOs.Result;
 using Domain.Constants;
 using Domain.Entities;
 using MediatR;
+using Slugify;
+using Unidecode.NET;
+using System.Text.RegularExpressions;
 using static Domain.Constants.DirectoryConstants;
 
 namespace Application.Soundtracks.Commands.Upload;
@@ -46,6 +49,9 @@ public class UploadFileCommandHandler(ISoundtrackRepository repository, IUnitOfW
 
             double audioLength = 0;
 
+            var nameWithoutExtension = Path.GetFileNameWithoutExtension(musicFileName);
+            var slug = new SlugHelper().GenerateSlug(nameWithoutExtension.Unidecode());
+
             using (var file = TagLib.File.Create(musicFilePath))
             {
                 audioLength = file.Properties.Duration.TotalSeconds;
@@ -61,19 +67,20 @@ public class UploadFileCommandHandler(ISoundtrackRepository repository, IUnitOfW
                         Directory.CreateDirectory(albumCoverDirectory);
                     }
 
-                    albumCoverName = (Path.GetFileNameWithoutExtension(musicFileName) + ".jpg").Replace(' ', '-');
+                    albumCoverName = (nameWithoutExtension + ".jpg").Replace(' ', '-');
                     await File.WriteAllBytesAsync(Path.Combine(albumCoverDirectory, albumCoverName), albumCoverData,
                         cancellationToken);
                 }
             }
-
+            
             var soundtrack = new Soundtrack()
             {
-                Title = Path.GetFileNameWithoutExtension(musicFileName),
+                Title = nameWithoutExtension,
                 Extension = extension,
                 LengthInSeconds = audioLength,
                 AlbumCoverFileName = albumCoverName,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.Now,
+                Slug = slug
             };
 
             await repository.Add(soundtrack);

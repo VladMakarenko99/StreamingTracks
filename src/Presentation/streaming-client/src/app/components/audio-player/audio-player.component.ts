@@ -72,13 +72,17 @@ export class AudioPlayerComponent implements OnChanges, OnDestroy {
 
     navigator.mediaSession.setActionHandler('previoustrack', () => {
       if (this.prevTrackId) {
-        this.router.navigate(['/soundtrack', this.prevTrackId]); // Emit event to navigate to the previous track
+       // this.router.navigate(['/soundtrack', this.prevTrackId], { queryParamsHandling: 'preserve' });
+        window.location.href = '/soundtrack/' + this.prevTrackId;
       }
     });
 
     navigator.mediaSession.setActionHandler('nexttrack', () => {
       if (this.nextTrackId) {
-        this.router.navigate(['/soundtrack', this.nextTrackId]); // Emit event to navigate to the next track
+        // console.log("MEDIA nexttrack")
+        // audioElement?.pause();
+        // this.router.navigate(['/soundtrack', this.nextTrackId], { queryParamsHandling: 'preserve' });
+        window.location.href = '/soundtrack/' + this.nextTrackId;
       }
     });
     navigator.mediaSession.setActionHandler('play', () => audioElement?.play());

@@ -5,7 +5,7 @@ import {SoundtrackComponent} from "./components/soundtrack/soundtrack.component"
 
 export const routes: Routes = [
     { path: 'sign-in', component: SignInComponent },
-    { path: 'soundtrack/:id', component: SoundtrackComponent },
+    { path: 'soundtrack/:slug', component: SoundtrackComponent },
     { path: '', component: HomeComponent },
 ];
 

@@ -24,10 +24,10 @@ public class SoundtrackController(IMediator mediator) : Controller
         return Ok(result);
     }
     
-    [HttpGet("{id}")]
-    public async Task<IActionResult> Get(Guid id)
+    [HttpGet("{slug}")]
+    public async Task<IActionResult> Get(string slug)
     {
-        var result = await mediator.Send(new GetByIdQuery(id));
+        var result = await mediator.Send(new GetBySlugQuery(slug));
         
         return Ok(result);
     }

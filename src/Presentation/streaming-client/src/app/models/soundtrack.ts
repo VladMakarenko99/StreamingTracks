@@ -3,7 +3,7 @@ export interface Soundtrack {
   title: string;
   lengthInSeconds: number
   albumCoverFileName: string;
-  showPlayer: boolean;
-  nextTrackId: string;
-  prevTrackId: string;
+  slug: string;
+  nextTrackSlug: string;
+  prevTrackSlug: string;
 }

@@ -5,5 +5,6 @@ public record SoundtrackDto(
     string Title,
     double LengthInSeconds,
     string AlbumCoverFileName,
-    Guid NextTrackId,
-    Guid PrevTrackId);
+    string Slug,
+    string NextTrackSlug,
+    string PrevTrackSlug);
