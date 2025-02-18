@@ -7,4 +7,5 @@ public record SoundtrackDto(
     string AlbumCoverFileName,
     string Slug,
     string NextTrackSlug,
-    string PrevTrackSlug);
+    string PrevTrackSlug,
+    string Url);

@@ -7,7 +7,7 @@ using Exception = System.Exception;
 
 namespace Application.Soundtracks.Queries.GetById;
 
-public class GetBySlugQueryHandler(ISoundtrackRepository repository)
+public class GetBySlugQueryHandler(ISoundtrackRepository repository, IAwsS3Service awsS3Service)
     : IRequestHandler<GetBySlugQuery, Result<SoundtrackDto>>
 {
     public async Task<Result<SoundtrackDto>> Handle(GetBySlugQuery request, CancellationToken cancellationToken)
@@ -29,7 +29,8 @@ public class GetBySlugQueryHandler(ISoundtrackRepository repository)
                 soundtrack.AlbumCoverFileName,
                 soundtrack.Slug,
                 slugs.NextTrackSlug ?? string.Empty,
-                slugs.PrevTrackSlug ?? string.Empty
+                slugs.PrevTrackSlug ?? string.Empty,
+                await awsS3Service.GetPreSignedUrlAsync($"{soundtrack.Title}{soundtrack.Extension}")
             );
             return Result<SoundtrackDto>.Success(dto);
         }

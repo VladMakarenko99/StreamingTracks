@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Amazon.Runtime;
 using Amazon.S3;
 using Application.Abstractions;
 using Application.Implementations;
@@ -43,10 +44,23 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<ICacheService, CacheService>();
         services.AddHostedService<BackupDeletionService>();
+        services.AddScoped<IAwsS3Service, AwsS3Service>();
         
-        services.AddDefaultAWSOptions(configuration.GetAWSOptions());
-        services.AddAWSService<IAmazonS3>();
+        var awsAccessKey = Environment.GetEnvironmentVariable("AWS_ACCESS_KEY_ID") 
+                           ?? configuration["AWS:AccessKey"];
 
+        var awsSecretKey = Environment.GetEnvironmentVariable("AWS_SECRET_ACCESS_KEY") 
+                           ?? configuration["AWS:SecretKey"];
+
+        var awsRegion = Environment.GetEnvironmentVariable("AWS_REGION") 
+                        ?? configuration["AWS:Region"];
+
+        var awsOptions = configuration.GetAWSOptions();
+        awsOptions.Credentials = new BasicAWSCredentials(awsAccessKey, awsSecretKey);
+
+        services.AddDefaultAWSOptions(awsOptions);
+        services.AddAWSService<IAmazonS3>();
+        
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.Jwt));
         
         return services;
