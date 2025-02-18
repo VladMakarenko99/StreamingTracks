@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Amazon.S3;
 using Application.Abstractions;
 using Application.Implementations;
 using Infrastructure.Configuration;
@@ -42,6 +43,9 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<ICacheService, CacheService>();
         services.AddHostedService<BackupDeletionService>();
+        
+        services.AddDefaultAWSOptions(configuration.GetAWSOptions());
+        services.AddAWSService<IAmazonS3>();
 
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.Jwt));
         
