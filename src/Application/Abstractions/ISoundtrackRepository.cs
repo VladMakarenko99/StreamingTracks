@@ -18,4 +18,6 @@ public interface ISoundtrackRepository
     Task Delete(Soundtrack soundtrack);
 
     Task<(string PrevTrackSlug, string NextTrackSlug)> GetPreviousAndNextTrackSlugs(Soundtrack currentTrack);
+
+    Task<bool> ExistsAsync(string title);
 }

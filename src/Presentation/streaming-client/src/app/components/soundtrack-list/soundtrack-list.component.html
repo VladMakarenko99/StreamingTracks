@@ -13,7 +13,7 @@
   <div class="soundtrack-item" *ngFor="let track of soundTackList">
     <div class="soundtrack-info">
       <img
-        ngSrc="{{this.albumCoverUrl}}{{track.albumCoverFileName}}"
+        ngSrc="{{ track.albumCoverUrl ? track.albumCoverUrl : 'album.png' }}"
         width="70"
         height="70"
         alt="Album Cover"

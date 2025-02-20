@@ -27,7 +27,6 @@ export class SoundtrackListComponent {
   isAdmin: boolean = false;
   loggedUser: LoggedInUser | null = null;
   isLoading: boolean = false;
-  albumCoverUrl: string = `${environment.apiUrl}/api/Soundtrack/image/`;
 
   constructor(private http: HttpClient, private authService: AuthService, public utilityService: UtilitiesService, private router: Router) {
     this.authService.isLoggedIn$.subscribe(isLoggedIn => {
@@ -49,6 +48,7 @@ export class SoundtrackListComponent {
         next: (result: any) => {
           this.isLoading = false;
           this.soundTackList = result.body.map((track: Soundtrack) => ({ ...track, showPlayer: false }));
+          console.log(this.soundTackList);
         },
         error: (error) => {
           console.error("Error fetching soundtracks:", error);

@@ -21,17 +21,17 @@ public class GetBySlugQueryHandler(ISoundtrackRepository repository, IAwsS3Servi
             }
 
             var slugs = await repository.GetPreviousAndNextTrackSlugs(soundtrack);
-            
+
             var dto = new SoundtrackDto(
                 soundtrack.Id,
                 soundtrack.Title,
                 soundtrack.LengthInSeconds,
-                soundtrack.AlbumCoverFileName,
                 soundtrack.Slug,
                 slugs.NextTrackSlug ?? string.Empty,
                 slugs.PrevTrackSlug ?? string.Empty,
-                await awsS3Service.GetPreSignedUrlAsync($"{soundtrack.Title}{soundtrack.Extension}")
-            );
+                soundtrack.MusicFileUrl,
+                soundtrack.AlbumCoverUrl ?? string.Empty);
+
             return Result<SoundtrackDto>.Success(dto);
         }
         catch (Exception e)

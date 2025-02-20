@@ -7,7 +7,7 @@
     <div class="soundtrack-info">
       <!-- Album Cover -->
       <img
-        [src]="albumCoverUrl + soundtrack.albumCoverFileName"
+        [src]="soundtrack.albumCoverUrl"
         width="100"
         height="100"
         alt="Album Cover"
@@ -26,7 +26,8 @@
     <app-audio-player
       [id]="soundtrack.id"
       [title]="soundtrack.title"
-      [albumCoverName]="soundtrack.albumCoverFileName"
+      [audioUrl]="soundtrack.musicFileUrl"
+      [albumCoverUrl]="soundtrack.albumCoverUrl"
       [nextTrackId]="soundtrack.nextTrackSlug"
       [prevTrackId]="soundtrack.prevTrackSlug"
     ></app-audio-player>

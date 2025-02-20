@@ -10,9 +10,11 @@ public class Soundtrack
 
     public double LengthInSeconds { get; set; }
     
-    public string AlbumCoverFileName { get; set; }
-    
     public DateTime CreatedAt { get; set; }
     
     public string Slug { get; set; }
+
+    public string MusicFileUrl { get; set; }
+    
+    public string? AlbumCoverUrl { get; set; }
 }

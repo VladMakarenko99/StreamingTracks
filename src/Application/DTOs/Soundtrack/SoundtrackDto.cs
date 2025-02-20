@@ -4,8 +4,8 @@ public record SoundtrackDto(
     Guid Id,
     string Title,
     double LengthInSeconds,
-    string AlbumCoverFileName,
     string Slug,
     string NextTrackSlug,
     string PrevTrackSlug,
-    string Url);
+    string MusicFileUrl,
+    string AlbumCoverUrl);

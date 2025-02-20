@@ -19,14 +19,12 @@ import {Router} from "@angular/router";
 })
 export class AudioPlayerComponent implements OnChanges, OnDestroy {
   @Input() id: string = '';
-  @Input() albumCoverName: string = '';
+  @Input() audioUrl: string = '';
+  @Input() albumCoverUrl: string = '';
   @Input() title: string = 'Default Title';
   @Input() prevTrackId: string = '';
   @Input() nextTrackId: string = '';
   @ViewChild('audioElement', { static: false }) audioElementRef!: ElementRef<HTMLAudioElement>;
-
-  audioUrl: string = '';
-  imageUrl: string = '';
   private viewInitialized = false;
 
   constructor(private router: Router) {}
@@ -34,7 +32,7 @@ export class AudioPlayerComponent implements OnChanges, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['id'] || changes['albumCoverName'] || changes['title']) {
       this.updatePlayer();
-      this.playAudio();
+     this.playAudio();
     }
   }
 
@@ -47,11 +45,6 @@ export class AudioPlayerComponent implements OnChanges, OnDestroy {
 
 
   updatePlayer(): void {
-    this.audioUrl = `${environment.apiUrl}/api/Streaming/${this.id}`;
-    this.imageUrl = this.albumCoverName
-      ? `${environment.apiUrl}/api/Soundtrack/image/${this.albumCoverName}`
-      : "album.png";
-
     let audioElement: HTMLAudioElement | null = null;
     if (this.audioElementRef) {
       audioElement = this.audioElementRef.nativeElement;
@@ -65,7 +58,7 @@ export class AudioPlayerComponent implements OnChanges, OnDestroy {
         title: this.title,
         artist: "Vladyslav Kovtun",
         artwork: [
-          { src: this.imageUrl, sizes: '512x512', type: 'image/jpeg' },
+          { src: this.audioUrl, sizes: '512x512', type: 'image/jpeg' },
         ],
       });
     }

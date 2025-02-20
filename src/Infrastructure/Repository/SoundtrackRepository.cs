@@ -65,4 +65,9 @@ public class SoundtrackRepository(AppDbContext context) : ISoundtrackRepository
 
         return (prevTrackSlug, nextTrackSlug)!;
     }
+
+    public Task<bool> ExistsAsync(string title)
+    {
+        return context.Soundtracks.AnyAsync(soundtrack => soundtrack.Title == title);
+    }
 }
