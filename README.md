@@ -17,7 +17,10 @@ The web client features a **custom music player** with **automatic track navigat
 - 🟢 **C#**  
 - 🟢 **PostgreSQL**  
 - 🟢 **REST API**  
-- 🟢 **AWS S3** (for track storage)  
+- 🟢 **AWS S3** (for track storage)
+- 🟢 **Clean Architecture** (Separation of Concerns, Use Cases, and Dependency Injection)  
+
+### **Frontend:**  
 
 ### **Frontend:**  
 - 🔵 **Angular**  
