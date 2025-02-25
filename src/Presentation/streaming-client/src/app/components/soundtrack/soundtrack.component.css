@@ -42,6 +42,7 @@
 .length {
   color: #aaa;
   margin-top: 5px;
+  margin-bottom: 0;
 }
 
 .audio-player {
@@ -101,11 +102,26 @@ audio {
   margin-top: 50px;
 }
 
+.listenings {
+  font-size: 14px;
+  color: #aaa;
+  margin-top: 5px;
+}
+
+.listenings-count {
+  font-weight: bold;
+  color: #aaa;
+}
+
 @media (max-width: 600px) {
   .single-soundtrack-card {
     max-width: 90%;
     padding: 15px;
     background-color: #333;
+  }
+
+  .listenings {
+    font-size: 12px;
   }
 
   .album-cover {

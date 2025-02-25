@@ -30,7 +30,8 @@ public class GetBySlugQueryHandler(ISoundtrackRepository repository, IAwsS3Servi
                 slugs.NextTrackSlug ?? string.Empty,
                 slugs.PrevTrackSlug ?? string.Empty,
                 soundtrack.MusicFileUrl,
-                soundtrack.AlbumCoverUrl ?? string.Empty);
+                soundtrack.AlbumCoverUrl ?? string.Empty,
+                soundtrack.Listenings);
 
             return Result<SoundtrackDto>.Success(dto);
         }

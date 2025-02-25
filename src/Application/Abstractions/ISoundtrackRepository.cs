@@ -11,8 +11,7 @@ public interface ISoundtrackRepository
     Task<Soundtrack?> GetById(Guid id);
     
     Task<Soundtrack?> GetBySlug(string slug);
-
-
+    
     Task<List<Soundtrack>> GetAll();
     
     Task Delete(Soundtrack soundtrack);

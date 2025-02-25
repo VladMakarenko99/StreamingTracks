@@ -1,6 +1,5 @@
 using Microsoft.Extensions.Hosting;
 using Exception = System.Exception;
-using static Domain.Constants.DirectoryConstants;
 
 namespace Infrastructure;
 
@@ -10,23 +9,23 @@ public class BackupDeletionService(IServiceProvider serviceProvider) : Backgroun
     {
         while (!stoppingToken.IsCancellationRequested)
         {
-            try
-            {
-                var generalMusicDirectory = Path.Combine(Directory.GetCurrentDirectory(), GeneralMusicDirectory);
-                var albumCoverDirectory = Path.Combine(Directory.GetCurrentDirectory(), GeneralMusicDirectory,
-                    AlbumCoverDirectory);
-
-                DeleteBackupFiles(generalMusicDirectory);
-
-                if (Directory.Exists(albumCoverDirectory))
-                {
-                    DeleteBackupFiles(albumCoverDirectory);
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Error in BackupDeletionService: {e.Message}");
-            }
+            // try
+            // {
+            //     var generalMusicDirectory = Path.Combine(Directory.GetCurrentDirectory(), GeneralMusicDirectory);
+            //     var albumCoverDirectory = Path.Combine(Directory.GetCurrentDirectory(), GeneralMusicDirectory,
+            //         AlbumCoverDirectory);
+            //
+            //     DeleteBackupFiles(generalMusicDirectory);
+            //
+            //     if (Directory.Exists(albumCoverDirectory))
+            //     {
+            //         DeleteBackupFiles(albumCoverDirectory);
+            //     }
+            // }
+            // catch (Exception e)
+            // {
+            //     Console.WriteLine($"Error in BackupDeletionService: {e.Message}");
+            // }
 
             await Task.Delay(TimeSpan.FromSeconds(30), stoppingToken);
         }

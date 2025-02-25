@@ -19,6 +19,9 @@
       <div class="track-details">
         <h3>{{ soundtrack.title }}</h3>
         <p class="length">{{ utilities.convertSecondsToTime(soundtrack.lengthInSeconds) }}</p>
+        <p class="listenings">
+          <span class="listenings-count">{{ soundtrack.listenings || 0 }}</span> listenings
+        </p>
       </div>
     </div>
 

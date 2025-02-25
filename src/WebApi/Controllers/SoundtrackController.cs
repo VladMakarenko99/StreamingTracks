@@ -1,12 +1,11 @@
 using Application.Soundtracks.Commands.Delete;
+using Application.Soundtracks.Commands.IncreaseListeningCount;
 using Application.Soundtracks.Commands.Upload;
 using Application.Soundtracks.Queries.GetAll;
 using Application.Soundtracks.Queries.GetById;
-using Application.Soundtracks.Queries.GetImage;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
@@ -60,17 +59,16 @@ public class SoundtrackController(IMediator mediator) : Controller
         return Ok(result);
     }
 
-    [HttpGet("image/{fileName}")]
-    public async Task<IActionResult> Image(string fileName)
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> IncreaseListeningCount(Guid id)
     {
-        var result = await mediator.Send(new GetImageQuery(fileName));
-        
-        if (!result.IsSuccess || result.Body is null)
+        var result = await mediator.Send(new IncreaseListeningCountCommand(id));
+
+        if (!result.IsSuccess)
         {
-            return BadRequest(result.Error);
+            return BadRequest(result);
         }
-        
-        const string contentType = "image/jpeg";
-        return File(result.Body, contentType);
+
+        return Ok(result);
     }
 }

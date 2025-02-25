@@ -17,4 +17,6 @@ public class Soundtrack
     public string MusicFileUrl { get; set; }
     
     public string? AlbumCoverUrl { get; set; }
+    
+    public int? Listenings { get; set; }
 }

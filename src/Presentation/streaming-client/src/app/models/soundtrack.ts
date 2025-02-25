@@ -7,4 +7,5 @@ export interface Soundtrack {
   prevTrackSlug: string;
   musicFileUrl: string;
   albumCoverUrl: string;
+  listenings: number;
 }

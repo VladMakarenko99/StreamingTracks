@@ -113,6 +113,9 @@ namespace Infrastructure.Migrations
                     b.Property<double>("LengthInSeconds")
                         .HasColumnType("double precision");
 
+                    b.Property<int?>("Listenings")
+                        .HasColumnType("integer");
+
                     b.Property<string>("MusicFileUrl")
                         .IsRequired()
                         .HasColumnType("text");

@@ -8,4 +8,5 @@ public record SoundtrackDto(
     string NextTrackSlug,
     string PrevTrackSlug,
     string MusicFileUrl,
-    string AlbumCoverUrl);
+    string AlbumCoverUrl,
+    int? Listenings);

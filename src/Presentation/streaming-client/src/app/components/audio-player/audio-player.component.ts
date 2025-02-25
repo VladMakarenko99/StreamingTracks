@@ -9,6 +9,7 @@ import {
   ElementRef, Output, EventEmitter
 } from "@angular/core";
 import {Router} from "@angular/router";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-audio-player',
@@ -24,15 +25,17 @@ export class AudioPlayerComponent implements OnChanges, OnDestroy {
   @Input() title: string = 'Default Title';
   @Input() prevTrackId: string = '';
   @Input() nextTrackId: string = '';
-  @ViewChild('audioElement', { static: false }) audioElementRef!: ElementRef<HTMLAudioElement>;
+  @ViewChild('audioElement', {static: false}) audioElementRef!: ElementRef<HTMLAudioElement>;
   private viewInitialized = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private http: HttpClient) {
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['id'] || changes['albumCoverName'] || changes['title']) {
       this.updatePlayer();
-     this.playAudio();
+      this.playAudio();
+      this.increaseListenings();
     }
   }
 
@@ -41,6 +44,7 @@ export class AudioPlayerComponent implements OnChanges, OnDestroy {
     this.updatePlayer();
     this.addAudioEventListeners();
     this.playAudio();
+    this.increaseListenings();
   }
 
 
@@ -58,14 +62,14 @@ export class AudioPlayerComponent implements OnChanges, OnDestroy {
         title: this.title,
         artist: "Vladyslav Kovtun",
         artwork: [
-          { src: this.audioUrl, sizes: '512x512', type: 'image/jpeg' },
+          {src: this.audioUrl, sizes: '512x512', type: 'image/jpeg'},
         ],
       });
     }
 
     navigator.mediaSession.setActionHandler('previoustrack', () => {
       if (this.prevTrackId) {
-       // this.router.navigate(['/soundtrack', this.prevTrackId], { queryParamsHandling: 'preserve' });
+        // this.router.navigate(['/soundtrack', this.prevTrackId], { queryParamsHandling: 'preserve' });
         window.location.href = '/soundtrack/' + this.prevTrackId;
       }
     });
@@ -119,4 +123,15 @@ export class AudioPlayerComponent implements OnChanges, OnDestroy {
       console.warn("No next track ID provided.");
     }
   };
+
+  private increaseListenings(): void {
+    this.http.patch<any>(`${environment.apiUrl}/api/Soundtrack/${this.id}`, null).subscribe({
+      next: (response) => {
+      },
+      error: (error) => {
+        console.error('Error updating soundtrack:', error);
+        alert(`Error: ${error.error?.error || 'Unable to update soundtrack.'}`);
+      }
+    });
+  }
 }
