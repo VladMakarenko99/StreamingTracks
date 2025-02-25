@@ -24,7 +24,7 @@ public class SoundtrackRepository(AppDbContext context) : ISoundtrackRepository
         => await context.Soundtracks.SingleOrDefaultAsync(x => x.Slug == slug);
 
 
-    public async Task<List<Soundtrack>> GetAll() => await context.Soundtracks.ToListAsync();
+    public async Task<List<Soundtrack>> GetAll() => await context.Soundtracks.OrderBy(x => x.CreatedAt).ToListAsync();
 
     public async Task Delete(Soundtrack soundtrack)
     {
