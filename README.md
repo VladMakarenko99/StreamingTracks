@@ -21,8 +21,6 @@ The web client features a **custom music player** with **automatic track navigat
 - 🟢 **Clean Architecture** (Separation of Concerns, Use Cases, and Dependency Injection)  
 
 ### **Frontend:**  
-
-### **Frontend:**  
 - 🔵 **Angular**  
 - 🔵 **HTML, CSS, JavaScript**  
 
